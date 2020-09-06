@@ -23,3 +23,17 @@ after_success:
   - docker push valentintanase/multi-nginx
   - docker push valentintanase/multi-server
   - docker push valentintanase/multi-worker
+
+# Deploy script for AWB Elastic Beanstalk
+deploy:
+  provider: elasticbeanstalk
+  region: eu-central-1
+  app: multi-docker
+  env: MultiDocker-env
+  bucket_name: elasticbeanstalk-eu-central-1-448743904882
+  bucket_path: docker-multi
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key:
+    secure: $AWS_SECRET_KEY
