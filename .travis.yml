@@ -4,22 +4,22 @@ services:
   - docker
 # Build a dev version of the frontend app and test it
 before_install:
-  - docker build -t valentinalexandru/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t valentintanase/react-test -f ./client/Dockerfile.dev ./client
 # We use -e CI=true arg in our run command 
 # in order for the program to exit with code 0 after
 # testing the app such that travis ci knows the test succeded
 script:
-  - docker run -e CI=true valentinalexandru/react-test npm test
+  - docker run -e CI=true valentintanase/react-test npm test
 # If the test script passes sucessfully then build the images 
 after_success:
-  - docker build -t valentinalexandru/multi-client ./client
-  - docker build -t valentinalexandru/multi-nginx ./nginx
-  - docker build -t valentinalexandru/multi-server ./server
-  - docker build -t valentinalexandru/multi-worker ./worker
+  - docker build -t valentintanase/multi-client ./client
+  - docker build -t valentintanase/multi-nginx ./nginx
+  - docker build -t valentintanase/multi-server ./server
+  - docker build -t valentintanase/multi-worker ./worker
 # Log in to the Docker CLI
 - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 # Push the Docker images to DockerHub
-- docker push valentinalexandru/multi-client
-- docker push valentinalexandru/multi-nginx
-- docker push valentinalexandru/multi-server
-- docker push valentinalexandru/multi-worker
+- docker push valentintanase/multi-client
+- docker push valentintanase/multi-nginx
+- docker push valentintanase/multi-server
+- docker push valentintanase/multi-worker
