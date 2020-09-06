@@ -16,10 +16,10 @@ after_success:
   - docker build -t valentintanase/multi-nginx ./nginx
   - docker build -t valentintanase/multi-server ./server
   - docker build -t valentintanase/multi-worker ./worker
-# Log in to the Docker CLI
-- echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-# Push the Docker images to DockerHub
-- docker push valentintanase/multi-client
-- docker push valentintanase/multi-nginx
-- docker push valentintanase/multi-server
-- docker push valentintanase/multi-worker
+    # Log in to the Docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    # Push the Docker images to DockerHub
+  - docker push valentintanase/multi-client
+  - docker push valentintanase/multi-nginx
+  - docker push valentintanase/multi-server
+  - docker push valentintanase/multi-worker
