@@ -1,0 +1,57 @@
+version: '3'
+services: 
+    postgres:
+        image: 'postgres:latest'
+        environment: 
+            - POSTGRES_PASSWORD=postgres_password
+    redis:
+        image: 'redis:latest'
+    
+    nginx:
+        restart: always
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./nginx
+        ports:
+            - '4000:80'
+    # Setup for the server
+    api:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./server
+        volumes:
+            
+            - /app/node_modules
+            - ./server:/app
+        # Environment variables
+        environment: 
+            # The redisHost is the URL that we use to access redis
+            - REDIS_HOST=redis
+            # Using the default redis port 6379
+            - REDIS_PORT=6379
+            # Default values for the postgres db
+            - PGUSER=postgres
+            - PGHOST=postgres
+            - PGDATABASE=postgres
+            - PGPASSWORD=postgres_password
+            - PGPORT=5432
+    # Client setup
+    client:
+        build:
+            dockerfile: Dockerfile.dev
+            context: ./client
+        volumes:
+            # This folder will not be overwritten
+            - /app/node_modules
+            - ./client:/app
+        # Use this, otherwise the client will exit with code 0
+        stdin_open: true
+    
+    worker:
+        build: 
+            dockerfile: Dockerfile.dev
+            context: ./worker
+        volumes: 
+            - /app/node_modules
+            - ./worker:/app
+
