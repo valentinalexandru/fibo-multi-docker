@@ -26,14 +26,21 @@ after_success:
 
 # Deploy script for AWB Elastic Beanstalk
 deploy:
+  # The AWS service wa went to deploy to
   provider: elasticbeanstalk
+  # The current region in use
   region: eu-central-1
+  # Nane of the EB app
   app: multi-docker
+  # Name of the EB environment
   env: MultiDocker-env
-  bucket_name: elasticbeanstalk-eu-central-1-448743904882
+  # Name for the S3 bucket what our app uses
+  bucket_name: elasticbeanstalk-eu-central-1-159399571077
   bucket_path: docker-multi
+  # Deploy to AWS the master branch only
   on:
     branch: master
+  # IAM keys for deployment
   access_key_id: $AWS_ACCESS_KEY
   secret_access_key:
     secure: $AWS_SECRET_KEY
